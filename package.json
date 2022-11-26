@@ -44,7 +44,6 @@
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.0.0",
     "@types/bcrypt": "^5.0.0",
-    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.13",
     "@types/jest": "27.0.2",
     "@types/jsonwebtoken": "^8.5.9",
@@ -64,7 +63,7 @@
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
     "tsconfig-paths": "^3.10.1",
-    "typescript": "^4.3.5"
+    "typescript": "4.3.5"
   },
   "jest": {
     "moduleFileExtensions": [

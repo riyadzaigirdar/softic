@@ -5,11 +5,10 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { ITokenPayload } from 'src/common/constants/interfaces';
-
 import configuration from '../../../config';
 import { ConfigService } from '@nestjs/config';
 import { User } from '../entities/user.entity';
+import { ITokenPayload } from 'src/common/constants/interfaces';
 import { GenerateTokenResponseDto } from '../dtos/generate-token-response.dto';
 
 @Injectable()
