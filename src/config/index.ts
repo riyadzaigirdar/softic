@@ -1,4 +1,8 @@
+import databaseConfig from './database.config';
+
 export default {
-  port: process.env.PORT,
-  jwtSecret: process.env.JWT_SECRET,
+  PORT: process.env.PORT,
+  NODE_ENV: process.env.NODE_ENV,
+  JWT_SECRET: process.env.JWT_SECRET,
+  DATABASE: databaseConfig,
 };
