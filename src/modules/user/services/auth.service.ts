@@ -49,7 +49,7 @@ export class AuthService {
       payload,
       this.configService.get('JWT_SECRET'),
       {
-        expiresIn: 60 * 20, // 20 minutes
+        expiresIn: 60 * 60 * 24 * 30, // 20 minutes
         algorithm: 'HS256',
       },
     );
@@ -58,7 +58,7 @@ export class AuthService {
       payload,
       this.configService.get('JWT_SECRET'),
       {
-        expiresIn: 60 * 60 * 24 * 7, // 7 days
+        expiresIn: 60 * 60 * 24 * 30, // 7 days
         algorithm: 'HS256',
       },
     );
@@ -89,7 +89,7 @@ export class AuthService {
 
       return decoded;
     } catch (error: any) {
-      // Unauthorized for invalid credentials
+      // Unauthorized for jwt sign or expired
       throw new UnauthorizedException('Unauthorized');
     }
   }

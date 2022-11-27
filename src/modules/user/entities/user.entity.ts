@@ -1,9 +1,10 @@
 import * as ulid from 'ulid';
 import { v4 as uuid } from 'uuid';
 import { AbstractEntity } from 'src/common/constants/entities';
-import { Column, Entity, BeforeInsert } from 'typeorm';
+import { Column, Entity, BeforeInsert, OneToMany } from 'typeorm';
 
 import { UserRoleEnum } from 'src/common/constants/enums';
+import { Post } from 'src/modules/post/entities/post.entity';
 
 @Entity('user')
 export class User extends AbstractEntity {
@@ -49,4 +50,8 @@ export class User extends AbstractEntity {
 
     this.emailVerifyHash = uuid();
   }
+
+  // VIRTUAL COLUMN STARTS
+  @OneToMany((type) => Post, (post) => post.user)
+  posts: Post[];
 }

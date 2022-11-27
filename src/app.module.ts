@@ -5,7 +5,6 @@ import { AppController } from './app.controller';
 import { UserModule } from './modules/user/user.module';
 import { PostModule } from './modules/post/post.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { CommentModule } from './modules/comment/comment.module';
 import { APP_FILTER } from '@nestjs/core';
 import { AllExceptionFilter } from './common/filters/all-exception.filter';
 
@@ -25,7 +24,6 @@ import { AllExceptionFilter } from './common/filters/all-exception.filter';
     }),
     UserModule,
     PostModule,
-    CommentModule,
   ],
   controllers: [AppController],
   providers: [
