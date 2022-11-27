@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { ModuleName } from 'src/common/constants/classes';
 import { ResponseDto } from 'src/common/constants/common.dto';
 import { UserRoleEnum } from 'src/common/constants/enums';

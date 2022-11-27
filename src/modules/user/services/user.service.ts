@@ -3,6 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { v4 as uuid } from 'uuid';
 import { AuthService } from './auth.service';
 import { User } from '../entities/user.entity';
 import { EntityManager, Repository } from 'typeorm';
@@ -11,6 +12,7 @@ import { LoginDto } from '../dtos/login.dto';
 import { SignupDto } from '../dtos/signup.dto';
 import { SignUpRoleEnum, UserRoleEnum } from 'src/common/constants/enums';
 import { ITokenPayload } from 'src/common/constants/interfaces';
+import { ForgotPasswordDto } from '../dtos/forgot-password.dto';
 
 @Injectable()
 export class UserService extends AuthService {
@@ -117,5 +119,49 @@ export class UserService extends AuthService {
     }
 
     return found;
+  }
+
+  async forgotPasswordDto(body: ForgotPasswordDto) {
+    let userFound = await this.userRepository.findOne({
+      where: { email: body.email },
+    });
+
+    if (!userFound) {
+      throw new NotFoundException('Email with that user not found');
+    }
+
+    userFound.emailVerifyHash = uuid();
+
+    userFound.emailVerified = false;
+
+    // =========== SENT VERIFICATION HASH TO EMAIL ============== //
+
+    let userSaved = await this.userRepository.save(userFound);
+
+    return {
+      emailVerified: userSaved.emailVerified,
+      emailVerifyHash: userSaved.emailVerifyHash,
+    };
+  }
+
+  async verifyEmail(hash: string) {
+    let userFound = await this.userRepository.findOne({
+      where: { emailVerifyHash: hash },
+    });
+
+    if (!userFound) {
+      throw new NotFoundException('User with that hash not found');
+    }
+
+    userFound.emailVerifyHash = null;
+
+    userFound.emailVerified = true;
+
+    let userSaved = await this.userRepository.save(userFound);
+
+    return {
+      emailVerified: userSaved.emailVerified,
+      emailVerifyHash: userSaved.emailVerifyHash,
+    };
   }
 }
