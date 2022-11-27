@@ -10,6 +10,7 @@ import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { LoginDto } from '../dtos/login.dto';
 import { SignupDto } from '../dtos/signup.dto';
 import { SignUpRoleEnum, UserRoleEnum } from 'src/common/constants/enums';
+import { ITokenPayload } from 'src/common/constants/interfaces';
 
 @Injectable()
 export class UserService extends AuthService {
@@ -51,6 +52,10 @@ export class UserService extends AuthService {
       throw new ForbiddenException("Password didn't match");
     }
 
+    foundUser.lastLogin = new Date();
+
+    await this.userRepository.save(foundUser);
+
     return await this.generateTokenForUser(foundUser);
   }
 
@@ -88,5 +93,29 @@ export class UserService extends AuthService {
       fullName: newUser.fullName,
       email: newUser.email,
     };
+  }
+
+  async getMe(reqUser: ITokenPayload) {
+    let found = await this.userRepository.findOne({
+      where: { userId: reqUser.userId },
+      select: [
+        'id',
+        'userId',
+        'fullName',
+        'email',
+        'profilePicture',
+        'role',
+        'emailVerified',
+        'isBanned',
+        'lastActivity',
+        'lastLogin',
+      ],
+    });
+
+    if (!found) {
+      throw new NotFoundException('User not found');
+    }
+
+    return found;
   }
 }
