@@ -15,7 +15,7 @@ export class ListPostQueryDto {
   @Transform(({ value }) => {
     return value === 'true';
   })
-  isPublished: boolean;
+  isPublished: boolean = null;
 
   @IsOptional()
   @IsString()

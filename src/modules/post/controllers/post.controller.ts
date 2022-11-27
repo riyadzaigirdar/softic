@@ -65,7 +65,7 @@ export class PostController {
     let data = await this.postService.updatePost(reqUser, postId, body);
 
     return {
-      code: 201,
+      code: 200,
       success: true,
       message: 'Successfully updated post',
       data,
