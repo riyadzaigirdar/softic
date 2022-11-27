@@ -1,4 +1,5 @@
 import * as ulid from 'ulid';
+import { v4 as uuid } from 'uuid';
 import { AbstractEntity } from 'src/common/constants/entities';
 import { Column, Entity, BeforeInsert } from 'typeorm';
 
@@ -33,6 +34,9 @@ export class User extends AbstractEntity {
   @Column({ type: 'boolean', default: false })
   emailVerified: boolean;
 
+  @Column({ type: 'varchar', nullable: true })
+  emailVerifyHash: string;
+
   @Column({ type: 'timestamp', nullable: true })
   lastLogin: Date;
 
@@ -42,5 +46,7 @@ export class User extends AbstractEntity {
   @BeforeInsert()
   userIdGenerate() {
     this.userId = ulid.ulid();
+
+    this.emailVerifyHash = uuid();
   }
 }
