@@ -51,7 +51,7 @@ export class PublicUserController {
   @Post('forgot-password')
   @HttpCode(200)
   async forgotPassword(@Body() body: ForgotPasswordDto): Promise<ResponseDto> {
-    let data = await this.userService.forgotPasswordDto(body);
+    let data = await this.userService.forgotPassword(body);
 
     return {
       code: 200,

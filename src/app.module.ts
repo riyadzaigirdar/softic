@@ -6,6 +6,8 @@ import { UserModule } from './modules/user/user.module';
 import { PostModule } from './modules/post/post.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CommentModule } from './modules/comment/comment.module';
+import { APP_FILTER } from '@nestjs/core';
+import { AllExceptionFilter } from './common/filters/all-exception.filter';
 
 @Module({
   imports: [
@@ -26,6 +28,11 @@ import { CommentModule } from './modules/comment/comment.module';
     CommentModule,
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: AllExceptionFilter,
+    },
+  ],
 })
 export class AppModule {}

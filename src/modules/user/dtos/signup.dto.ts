@@ -3,7 +3,6 @@ import {
   IsEnum,
   IsDefined,
   IsString,
-  Min,
   IsEmail,
   MinLength,
 } from 'class-validator';
@@ -34,6 +33,8 @@ export class SignupDto {
   password: string;
 
   @IsDefined()
-  @IsEnum(SignUpRoleEnum, { message: 'role must be candidate or employer' })
+  @IsEnum(SignUpRoleEnum, {
+    message: `role must be ${Object.values(SignUpRoleEnum).join(',')}`,
+  })
   role: SignUpRoleEnum;
 }

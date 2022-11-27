@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
+import * as fs from 'fs';
 import { AuthService } from './auth.service';
 import { User } from '../entities/user.entity';
 import { EntityManager, Repository } from 'typeorm';
@@ -13,6 +14,7 @@ import { SignupDto } from '../dtos/signup.dto';
 import { SignUpRoleEnum, UserRoleEnum } from 'src/common/constants/enums';
 import { ITokenPayload } from 'src/common/constants/interfaces';
 import { ForgotPasswordDto } from '../dtos/forgot-password.dto';
+import { UpdateUserDto } from '../dtos/update-user.dto';
 
 @Injectable()
 export class UserService extends AuthService {
@@ -45,7 +47,7 @@ export class UserService extends AuthService {
       );
     }
 
-    let passwordMatched = this.checkPasswordMatch(
+    let passwordMatched = await this.checkPasswordMatch(
       body.password,
       foundUser.password,
     );
@@ -94,6 +96,7 @@ export class UserService extends AuthService {
       userId: newUser.userId,
       fullName: newUser.fullName,
       email: newUser.email,
+      hash: newUser.emailVerifyHash,
     };
   }
 
@@ -121,7 +124,58 @@ export class UserService extends AuthService {
     return found;
   }
 
-  async forgotPasswordDto(body: ForgotPasswordDto) {
+  async updateUser(reqUser: ITokenPayload, body: UpdateUserDto) {
+    let foundUser = await this.userRepository.findOne({
+      where: { userId: reqUser.userId },
+    });
+
+    if (!foundUser) {
+      throw new NotFoundException('User not found');
+    }
+
+    if (body.fullName) {
+      foundUser.fullName = body.fullName;
+    }
+
+    if (body.password) {
+      foundUser.password = await this.hashPassword(body.password);
+    }
+
+    let savedUser = await this.userRepository.save(foundUser);
+
+    return {
+      userId: savedUser.userId,
+      fullName: savedUser.fullName,
+      email: savedUser.email,
+    };
+  }
+
+  async uploadImage(reqUser: ITokenPayload, buffer) {
+    let userFound = await this.userRepository.findOne({
+      where: { userId: reqUser.userId },
+    });
+
+    if (!userFound) {
+      throw new NotFoundException('Email with that user not found');
+    }
+
+    console.log(buffer);
+
+    let link = `media/${buffer.originalname}`;
+
+    await fs.createWriteStream(link).write(Buffer.from(buffer.toString()));
+
+    userFound.profilePicture = link;
+
+    let userSaved = await this.userRepository.save(userFound);
+
+    return {
+      userId: userSaved.userId,
+      profilePicture: userSaved.profilePicture,
+    };
+  }
+
+  async forgotPassword(body: ForgotPasswordDto) {
     let userFound = await this.userRepository.findOne({
       where: { email: body.email },
     });
