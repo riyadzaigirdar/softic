@@ -10,6 +10,6 @@ export class CreatePostDto {
   body: string;
 
   @IsOptional()
-  @IsNumber()
+  @IsString()
   userId: string;
 }
