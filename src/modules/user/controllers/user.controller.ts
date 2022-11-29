@@ -35,7 +35,7 @@ import { UserService } from '../services/user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @ApiOkResponse({ description: 'get me' })
+  @ApiOkResponse({ description: 'get me', status: 200 })
   @Get('/me')
   async me(@ReqUser() reqUser: ITokenPayload): Promise<ResponseDto> {
     let data = await this.userService.getMe(reqUser);
@@ -48,7 +48,7 @@ export class UserController {
     };
   }
 
-  @ApiOkResponse({ description: 'update user' })
+  @ApiOkResponse({ description: 'update user', status: 200 })
   @Put('/')
   async updateUser(
     @ReqUser() reqUser: ITokenPayload,
@@ -65,7 +65,7 @@ export class UserController {
     };
   }
 
-  @ApiOkResponse({ description: 'upload image' })
+  @ApiOkResponse({ description: 'upload image', status: 200 })
   @Post('/upload-image')
   @UseInterceptors(FileInterceptor('image'))
   async uploadImage(

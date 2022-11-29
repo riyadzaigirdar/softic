@@ -33,7 +33,7 @@ import { PostService } from '../services/post.service';
 export class AdminPostController {
   constructor(private readonly postService: PostService) {}
 
-  @ApiOkResponse({ description: 'post list by admin' })
+  @ApiOkResponse({ description: 'post list by admin', status: 200 })
   @Get('')
   async getPostListByAdmin(
     @ReqUser() reqUser: ITokenPayload,
@@ -49,7 +49,7 @@ export class AdminPostController {
     };
   }
 
-  @ApiOkResponse({ description: 'create post by admin' })
+  @ApiOkResponse({ description: 'create post by admin', status: 201 })
   @Post('')
   async createPostByAdmin(
     @ReqUser() reqUser: ITokenPayload,
@@ -65,7 +65,7 @@ export class AdminPostController {
     };
   }
 
-  @ApiOkResponse({ description: 'update post by admin' })
+  @ApiOkResponse({ description: 'update post by admin', status: 200 })
   @Put(':postId')
   async updatePostByAdmin(
     @ReqUser() reqUser: ITokenPayload,

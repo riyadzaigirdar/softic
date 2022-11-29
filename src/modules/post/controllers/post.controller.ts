@@ -33,7 +33,7 @@ import { PostService } from '../services/post.service';
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
-  @ApiOkResponse({ description: 'post list by general user' })
+  @ApiOkResponse({ description: 'post list by general user', status: 200 })
   @Get('')
   async getPostListByUser(
     @ReqUser() reqUser: ITokenPayload,
@@ -49,7 +49,7 @@ export class PostController {
     };
   }
 
-  @ApiOkResponse({ description: 'create post by general user' })
+  @ApiOkResponse({ description: 'create post by general user', status: 201 })
   @Post('')
   async createPostByUser(
     @ReqUser() reqUser: ITokenPayload,
@@ -65,7 +65,7 @@ export class PostController {
     };
   }
 
-  @ApiOkResponse({ description: 'update post by general user' })
+  @ApiOkResponse({ description: 'update post by general user', status: 200 })
   @Put(':postId')
   async updatePostByUser(
     @ReqUser() reqUser: ITokenPayload,

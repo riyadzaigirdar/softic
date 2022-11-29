@@ -29,7 +29,7 @@ import { UserService } from '../services/user.service';
 export class AdminUserController {
   constructor(private readonly userService: UserService) {}
 
-  @ApiOkResponse({ description: 'get user list by admin' })
+  @ApiOkResponse({ description: 'get user list by admin', status: 200 })
   @Get('')
   async getUserListByAdmin(
     @Query() query: UserListQueryDto,
@@ -44,7 +44,7 @@ export class AdminUserController {
     };
   }
 
-  @ApiOkResponse({ description: 'update user by admin' })
+  @ApiOkResponse({ description: 'update user by admin', status: 200 })
   @Put(':userId')
   async updateUserByAdmin(
     @Param('userId') userId: string,
