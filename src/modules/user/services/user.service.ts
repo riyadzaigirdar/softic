@@ -48,6 +48,12 @@ export class UserService extends AuthService {
       );
     }
 
+    if (!foundUser.password) {
+      throw new ForbiddenException(
+        "You haven't set your password! kindly try google login.",
+      );
+    }
+
     let passwordMatched = await this.checkPasswordMatch(
       body.password,
       foundUser.password,

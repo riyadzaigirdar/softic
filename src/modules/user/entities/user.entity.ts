@@ -23,7 +23,7 @@ export class User extends AbstractEntity {
   @Column({ type: 'varchar', nullable: true })
   profilePicture: string;
 
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: 'varchar', nullable: true })
   password: string;
 
   @Column({ type: 'enum', enum: UserRoleEnum, nullable: false })
