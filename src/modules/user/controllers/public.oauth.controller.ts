@@ -12,7 +12,7 @@ import { OAuthService } from '../services/oauth.service';
 export class PublicOAuthController {
   constructor(private readonly oAuthService: OAuthService) {}
 
-  @Get('login-url')
+  @Get('google-login-url')
   oAuthLoginUrl(): ResponseDto {
     let data = this.oAuthService.getAuthorizationUrl();
     return {
@@ -23,7 +23,7 @@ export class PublicOAuthController {
     };
   }
 
-  @Get('login')
+  @Get('google-login')
   async oAuthLogin(
     @Query() query: OAuthCallbackQueryDto,
   ): Promise<ResponseDto> {
