@@ -47,6 +47,11 @@ async function bootstrap() {
     }),
   );
 
+  // ===================== SET PREFIX ====================== //
+  let endpointPrefix = '/api/v1/';
+
+  app.setGlobalPrefix(endpointPrefix);
+
   const options = new DocumentBuilder()
     .setTitle('Swagger example')
     .setDescription('The supplier API description')
@@ -56,17 +61,12 @@ async function bootstrap() {
       'authorization',
     )
     .addTag('supplier')
-    .addServer('/lf-sup/api/v1/')
+
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
 
   SwaggerModule.setup('swagger', app, document);
-
-  // ===================== SET PREFIX ====================== //
-  let endpointPrefix = '/api/v1/';
-
-  app.setGlobalPrefix(endpointPrefix);
 
   // ===================== LOG APP STARTING ====================== //
   await app.listen(configuration.PORT);

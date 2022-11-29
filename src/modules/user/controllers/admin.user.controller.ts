@@ -21,7 +21,7 @@ import { UpdateUserDto } from '../dtos/update-user.dto';
 import { UserListQueryDto } from '../dtos/user-list-query.dto';
 import { UserService } from '../services/user.service';
 
-@ApiBearerAuth()
+@ApiBearerAuth('admin')
 @ApiUnauthorizedResponse({ description: 'Unauthorized response' })
 @UseGuards(AuthorizeGuard)
 @Permissions(ModuleName.USER, [UserRoleEnum.SUPER_ADMIN])

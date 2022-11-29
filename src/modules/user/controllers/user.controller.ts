@@ -11,6 +11,11 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { ModuleName } from 'src/common/constants/classes';
 import { ResponseDto } from 'src/common/constants/common.dto';
 import { UserRoleEnum } from 'src/common/constants/enums';
@@ -22,6 +27,8 @@ import { ParseFormDataJsonPipe } from 'src/common/pipes/parse-form-data.pipe';
 import { UpdateUserDto } from '../dtos/update-user.dto';
 import { UserService } from '../services/user.service';
 
+@ApiBearerAuth('user')
+@ApiUnauthorizedResponse({ description: 'Unauthorized response' })
 @UseGuards(AuthorizeGuard)
 @Permissions(ModuleName.USER, [
   UserRoleEnum.SUPER_ADMIN,
@@ -31,6 +38,7 @@ import { UserService } from '../services/user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @ApiOkResponse({ description: 'get me' })
   @Get('/me')
   async me(@ReqUser() reqUser: ITokenPayload): Promise<ResponseDto> {
     let data = await this.userService.getMe(reqUser);
@@ -43,6 +51,7 @@ export class UserController {
     };
   }
 
+  @ApiOkResponse({ description: 'update user' })
   @Put('/')
   async updateUser(
     @ReqUser() reqUser: ITokenPayload,
@@ -59,6 +68,7 @@ export class UserController {
     };
   }
 
+  @ApiOkResponse({ description: 'upload image' })
   @Post('/upload-image')
   @UseInterceptors(FileInterceptor('image'))
   async uploadImage(
