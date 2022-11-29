@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  app:
+    container_name: softic
+    image: softic
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    command: npm run start:prod
+    ports:
+      - 8000:8000
+    environment:
+      - PORT=8000
+      - NODE_ENV=develop
+      - JWT_SECRET=secret
+      - DB_TYPE=postgres
+      - DB_HOST=ec2-54-174-31-7.compute-1.amazonaws.com
+      - DB_USERNAME=cvfxszgeqfylhu
+      - DB_PASSWORD=a4fb1910aa2e268a30aea1717f8c149ebcd9a0abcc5c55e73fe236927311f759
+      - DB_PORT=5432
+      - DB_NAME=dauoidlqmsoi3f
+      - OAUTH_CLIENT_ID=429240434139-t9ro20kackvgt937p0fepjfn5p4ntn7g.apps.googleusercontent.com
+      - OAUTH_CLIENT_SECRET=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
+      - OAUTH_REDIRECT_URL=https://636b75db260c5c26259b531f--kalke.netlify.app
+      - OAUTH_API_KEY=AIzaSyD1vYxSfcguMJ_N9acAAOu45F2vM6mmt3w
