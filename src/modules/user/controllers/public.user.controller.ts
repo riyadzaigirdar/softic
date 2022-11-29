@@ -41,7 +41,7 @@ export class PublicUserController {
     let data = await this.userService.signUpUser(body);
 
     return {
-      code: 200,
+      code: 201,
       success: true,
       message: 'Successfully created user',
       data,
