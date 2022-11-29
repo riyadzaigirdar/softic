@@ -8,6 +8,11 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { ModuleName } from 'src/common/constants/classes';
 import { ResponseDto } from 'src/common/constants/common.dto';
 import { UserRoleEnum } from 'src/common/constants/enums';
@@ -20,12 +25,15 @@ import { ListPostQueryDto } from '../dtos/list-post-query.dto';
 import { UpdatePostDto } from '../dtos/update-post-body.dto';
 import { PostService } from '../services/post.service';
 
+@ApiBearerAuth()
+@ApiUnauthorizedResponse({ description: 'Unauthorized response' })
 @UseGuards(AuthorizeGuard)
 @Permissions(ModuleName.USER, [UserRoleEnum.GENERAL_USER])
 @Controller('post')
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
+  @ApiOkResponse({ description: 'post list by general user' })
   @Get('')
   async getPostListByUser(
     @ReqUser() reqUser: ITokenPayload,
@@ -41,6 +49,7 @@ export class PostController {
     };
   }
 
+  @ApiOkResponse({ description: 'create post by general user' })
   @Post('')
   async createPostByUser(
     @ReqUser() reqUser: ITokenPayload,
@@ -56,6 +65,7 @@ export class PostController {
     };
   }
 
+  @ApiOkResponse({ description: 'update post by general user' })
   @Put(':postId')
   async updatePostByUser(
     @ReqUser() reqUser: ITokenPayload,

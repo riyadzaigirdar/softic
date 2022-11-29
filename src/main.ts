@@ -10,6 +10,7 @@ import {
 import configuration from './config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -45,6 +46,22 @@ async function bootstrap() {
       },
     }),
   );
+
+  const options = new DocumentBuilder()
+    .setTitle('Swagger example')
+    .setDescription('The supplier API description')
+    .setVersion('1.0')
+    .addBearerAuth(
+      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+      'authorization',
+    )
+    .addTag('supplier')
+    .addServer('/lf-sup/api/v1/')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, options);
+
+  SwaggerModule.setup('swagger', app, document);
 
   // ===================== SET PREFIX ====================== //
   let endpointPrefix = '/api/v1/';

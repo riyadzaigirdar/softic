@@ -8,6 +8,11 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { ModuleName } from 'src/common/constants/classes';
 import { ResponseDto } from 'src/common/constants/common.dto';
 import { UserRoleEnum } from 'src/common/constants/enums';
@@ -20,12 +25,15 @@ import { ListPostQueryDto } from '../dtos/list-post-query.dto';
 import { UpdatePostDto } from '../dtos/update-post-body.dto';
 import { PostService } from '../services/post.service';
 
+@ApiBearerAuth()
+@ApiUnauthorizedResponse({ description: 'Unauthorized response' })
 @UseGuards(AuthorizeGuard)
 @Permissions(ModuleName.USER, [UserRoleEnum.SUPER_ADMIN])
 @Controller('admin/post')
 export class AdminPostController {
   constructor(private readonly postService: PostService) {}
 
+  @ApiOkResponse({ description: 'post list by admin' })
   @Get('')
   async getPostListByAdmin(
     @ReqUser() reqUser: ITokenPayload,
@@ -41,6 +49,7 @@ export class AdminPostController {
     };
   }
 
+  @ApiOkResponse({ description: 'create post by admin' })
   @Post('')
   async createPostByAdmin(
     @ReqUser() reqUser: ITokenPayload,
@@ -56,6 +65,7 @@ export class AdminPostController {
     };
   }
 
+  @ApiOkResponse({ description: 'update post by admin' })
   @Put(':postId')
   async updatePostByAdmin(
     @ReqUser() reqUser: ITokenPayload,

@@ -13,7 +13,7 @@ const databaseConfig = {
   cli: {
     migrationsDir: __dirname + '/../migrations',
   },
-  synchronize: true,
+  synchronize: true, // must set to false in production
 };
 
 if (
