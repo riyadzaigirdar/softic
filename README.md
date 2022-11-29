@@ -1,3 +1,17 @@
+## RUN
+
+    docker-compose up --build -d
+
+### SUPER ADMIN
+
+    email = "riyad@gmail.com",
+    password = "123456"
+
+### GENERAL_USER
+
+    email = "general_user@gmail.com",
+    password = "123456"
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>

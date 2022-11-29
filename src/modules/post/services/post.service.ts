@@ -18,7 +18,6 @@ export class PostService {
   constructor(
     @InjectRepository(Post) private postRepository: Repository<Post>,
     @InjectRepository(User) private userRepository: Repository<User>,
-    @InjectEntityManager() private readonly manager: EntityManager,
   ) {}
 
   // ====== RE-USABLE FUNCTION FOR BOTH ADMIN AND GENERAL USER ====== //
