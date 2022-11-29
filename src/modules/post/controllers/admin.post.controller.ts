@@ -25,7 +25,7 @@ import { ListPostQueryDto } from '../dtos/list-post-query.dto';
 import { UpdatePostDto } from '../dtos/update-post-body.dto';
 import { PostService } from '../services/post.service';
 
-@ApiBearerAuth('admin')
+@ApiBearerAuth('authorization')
 @ApiUnauthorizedResponse({ description: 'Unauthorized response' })
 @UseGuards(AuthorizeGuard)
 @Permissions(ModuleName.USER, [UserRoleEnum.SUPER_ADMIN])

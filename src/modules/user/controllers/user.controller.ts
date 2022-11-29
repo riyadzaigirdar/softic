@@ -2,13 +2,11 @@ import {
   Body,
   Controller,
   Get,
-  Param,
   Post,
   Put,
   UploadedFile,
   UseGuards,
   UseInterceptors,
-  ValidationPipe,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
@@ -23,11 +21,10 @@ import { ITokenPayload } from 'src/common/constants/interfaces';
 import { ReqUser } from 'src/common/decorators/param.decorator';
 import { Permissions } from 'src/common/decorators/permission.decorator';
 import { AuthorizeGuard } from 'src/common/guards/authorize.guard';
-import { ParseFormDataJsonPipe } from 'src/common/pipes/parse-form-data.pipe';
 import { UpdateUserDto } from '../dtos/update-user.dto';
 import { UserService } from '../services/user.service';
 
-@ApiBearerAuth('user')
+@ApiBearerAuth('authorization')
 @ApiUnauthorizedResponse({ description: 'Unauthorized response' })
 @UseGuards(AuthorizeGuard)
 @Permissions(ModuleName.USER, [

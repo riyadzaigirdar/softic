@@ -53,14 +53,13 @@ async function bootstrap() {
   app.setGlobalPrefix(endpointPrefix);
 
   const options = new DocumentBuilder()
-    .setTitle('Swagger example')
+    .setTitle('Softic')
     .setDescription('The supplier API description')
     .setVersion('1.0')
     .addBearerAuth(
       { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
       'authorization',
     )
-    .addTag('supplier')
 
     .build();
 
